@@ -3,7 +3,7 @@
 Schema Deletion Guidelines
 ==========================
 
-|sr| API supports deleting a specific schema version or all versions of a subject. The API only deletes the version and the underlying schema ID would still be available for any lookup.
+|sr| API can delete a specific schema version or all versions of a subject. The API deletes the version but the underlying schema ID would still be available for any lookup.
 
 .. sourcecode:: bash
 
@@ -19,11 +19,11 @@ Schema Deletion Guidelines
       curl -X DELETE http://localhost:8081/subjects/Kafka-value/versions/latest
       1
 
-The above API's are primarily intended to be used be in development environment where it's common to go through iterations before finalizing a schema. While it's not recommended to be used in a production environment, there are few scenarios where these API's can be used in production but with utmost care.
+The above APIs are intended to be used be in a development environment where it's common to iterate on a schema before finalizing it. It is not recommended to use the APIs in a production environment. However, in a few scenarios these APIs can be used in production but with caution.
 
 - A new schema to be registered has compatibility issues with one of the existing schema versions
 - An old version of the schema needs to be registered again for the same subject
-- The schema's are used only in real-time streaming systems and the older version(s) are absolutely no longer required
+- The schemas are used only in real-time streaming systems and the older version(s) are absolutely no longer required
 - A topic needs to be recycled
 
-It is also important to note that any registered compatibility settings for the subject would also be deleted while using Delete Subject or when you delete the only available schema version.
+IMPORTANT! Delete Subject will delete any registered compatibility settings for the subject.  It will also delete these settings when you delete the only available schema version.
